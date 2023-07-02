@@ -100,7 +100,7 @@ function calculateTaxParts() {
     defaultParts = 2.5;
   } else if (maritalStatus === 'married') { 
     defaultParts = 2;
-  } else if (maritalStatus === 'single' && particularSituation === 'self' || particularSituation === 'invalid') {
+  } else if (maritalStatus === 'single' && (particularSituation === 'self' || particularSituation === 'invalid')) {
     defaultParts = 1.5;
   } else if (maritalStatus === 'single' && particularSituation === 'isoled' && childrenCount > 0) {
       defaultParts = 1.5;
@@ -110,8 +110,8 @@ function calculateTaxParts() {
     defaultParts = 2;
   } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount > 0 && particularSituation === 'invalid') {
     defaultParts = 2.5;
-  } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount === 0 && particularSituation === 'invalid' || particularSituation === 'self' ) {
-      defaultParts = 1.5;
+  } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount === 0 && (particularSituation === 'invalid' || particularSituation === 'self')) {
+      defaultParts = 2.5;
   } else {
     defaultParts = 1;
   }
@@ -169,13 +169,92 @@ decote = forfaitcouple - (impotbrut * decotpourcent)
   decote = forfaitcelib - (impotbrut * decotpourcent)
 } else {
   decote = 0
-} 
+}
 
 decote = Math.round(decote);
 
 document.getElementById('décôte').innerText = `décôte ${decote} €`;
 
 }
+
+                                // Calcul de la réduction d'impôts maximale dû au(x) part(s) suplémentaire
+
+let y = 0
+
+function calculateredmax() {
+  const maritalStatus = document.getElementById('marital_status').value;
+  const childrenCount = parseInt(document.getElementById('childrenCount').value) || 0;
+  const altChildrenCount = parseInt(document.getElementById('altChildrenCount').value) || 0;
+  const particularSituation = document.getElementById('particular_situation').value;
+
+                                            // METTRE A JOUR CHAQUE ANNEE //
+
+                                          const demipartenfant = 1678
+                                          const isoled = 3996
+                                          const selfchildren = 1002
+                                          const widowed = 5273
+                                          const invalid = 3383
+
+                                            // METTRE A JOUR CHAQUE ANNEE //
+  let rédumaxchildren = 0;
+  let réducisoled = 0;
+  let réducself = 0;
+  let réducwidowed = 0;
+  let réducinvalid =0;
+
+if (altChildrenCount === 0 && childrenCount > 0) {
+  
+    rédumaxchildren = demipartenfant * Math.min(2, childrenCount) + demipartenfant * 2 * Math.max(0, childrenCount - 2)
+
+} else if (childrenCount === 0 && altChildrenCount > 0) {
+
+  rédumaxchildren = 0.5 * demipartenfant * Math.min(2, altChildrenCount) + Math.max(0, altChildrenCount - 2) * demipartenfant
+
+} else if (childrenCount === 1 && altChildrenCount === 1) {
+
+  rédumaxchildren = 1.5 * demipartenfant // Un demi part complète + la moitié d'une demi part //
+
+} else if (childrenCount > 1 && altChildrenCount === 1 ) {
+
+  rédumaxchildren = demipartenfant * Math.min(2, childrenCount) + (childrenCount - 2) * 2 * demipartenfant + demipartenfant
+
+} else if (childrenCount === 1 && altChildrenCount > 1) {
+
+  rédumaxchildren = 1.5 * demipartenfant + (altChildrenCount - 1) * demipartenfant
+
+} else if (childrenCount > 1 && altChildrenCount > 1) {
+
+  rédumaxchildren =  2 * demipartenfant + (childrenCount - 2) * 2 * demipartenfant + altChildrenCount * demipartenfant
+
+}
+
+if (particularSituation === 'isoled' && childrenCount > 0 && altChildrenCount === 0) {
+  réducisoled = isoled - demipartenfant
+} else if (particularSituation === 'isoled' && childrenCount === 0 && altChildrenCount > 0) {
+  réducisoled = Math.min(2, altChildrenCount) * 0.25 * isoled
+} else if (particularSituation === 'isoled' && childrenCount > 0 && altChildrenCount > 0) {
+  réducisoled = isoled - demipartenfant
+}
+  
+if (particularSituation === 'self') {
+  réducself = selfchildren
+} else réducself = 0
+
+if (maritalStatus === 'widowed' && childrenCount > 0) {
+  réducwidowed = widowed - demipartenfant
+} else réducwidowed = 0
+
+if (particularSituation === 'invalid') {
+  réducinvalid = invalid
+} else réducinvalid = 0
+
+y = rédumaxchildren + réducisoled + réducwidowed + réducinvalid + réducself
+
+document.getElementById('resulti').innerText = `Réduction max : ${y}`;
+
+}
+
+                                                  // FIN //
 
                                             // FONCTION CALCUL IMPÔT //
 
@@ -240,85 +319,6 @@ document.getElementById('décôte').innerText = `décôte ${decote} €`;
 
                                              // FIN //
   } 
-
-                             // Calcul de la réduction d'impôts maximale dû au(x) part(s) suplémentaire
-
- let y = 0
-
-function calculateredmax() {
-  const maritalStatus = document.getElementById('marital_status').value;
-  const childrenCount = parseInt(document.getElementById('childrenCount').value) || 0;
-  const altChildrenCount = parseInt(document.getElementById('altChildrenCount').value) || 0;
-  const particularSituation = document.getElementById('particular_situation').value;
-
-                                            // METTRE A JOUR CHAQUE ANNEE //
-
-                                           const demipartenfant = 1678
-                                           const isoled = 3996
-                                           const selfchildren = 1002
-                                           const widowed = 5273
-                                           const invalid = 3383
-
-                                            // METTRE A JOUR CHAQUE ANNEE //
-  let rédumaxchildren = 0;
-  let réducisoled = 0;
-  let réducself = 0;
-  let réducwidowed = 0;
-  let réducinvalid =0;
-
-if (altChildrenCount === 0 && childrenCount > 0) {
-  
-    rédumaxchildren = demipartenfant * Math.min(2, childrenCount) + demipartenfant * 2 * Math.max(0, childrenCount - 2)
-
-} else if (childrenCount === 0 && altChildrenCount > 0) {
-
-   rédumaxchildren = 0.5 * demipartenfant * Math.min(2, altChildrenCount) + Math.max(0, altChildrenCount - 2) * demipartenfant
-
-} else if (childrenCount === 1 && altChildrenCount === 1) {
-
-  rédumaxchildren = 1.5 * demipartenfant // Un demi part complète + la moitié d'une demi part //
-
-} else if (childrenCount > 1 && altChildrenCount === 1 ) {
-
-  rédumaxchildren = demipartenfant * Math.min(2, childrenCount) + (childrenCount - 2) * 2 * demipartenfant + demipartenfant
-
-} else if (childrenCount === 1 && altChildrenCount > 1) {
-
-  rédumaxchildren = 1.5 * demipartenfant + (altChildrenCount - 1) * demipartenfant
-
-} else if (childrenCount > 1 && altChildrenCount > 1) {
-
-  rédumaxchildren =  2 * demipartenfant + (childrenCount - 2) * 2 * demipartenfant + altChildrenCount * demipartenfant
-
-}
-
-if (particularSituation === 'isoled' && childrenCount > 0 && altChildrenCount === 0) {
-  réducisoled = isoled - demipartenfant
-} else if (particularSituation === 'isoled' && childrenCount === 0 && altChildrenCount > 0) {
-  réducisoled = Math.min(2, altChildrenCount) * 0.25 * isoled
-} else if (particularSituation === 'isoled' && childrenCount > 0 && altChildrenCount > 0) {
-  réducisoled = isoled - demipartenfant
-}
-  
-if (particularSituation === 'self') {
-  réducself = selfchildren
-} else réducself = 0
-
-if (maritalStatus === 'widowed' && childrenCount > 0) {
-  réducwidowed = widowed - demipartenfant
-} else réducwidowed = 0
-
-if (particularSituation === 'invalid') {
-  réducinvalid = invalid
-} else réducinvalid = 0
-
-y = rédumaxchildren + réducisoled + réducwidowed + réducinvalid + réducself
-
-document.getElementById('resulti').innerText = `Réduction max : ${y}`;
-
-}
-
-                                                  // FIN //
 
 
 function updateParticularSituationOptions() {
