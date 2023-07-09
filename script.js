@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('revenu-net-annuel').addEventListener('change', calculateDecote);
 });
 
+
                                             // FONCTION CALCUL REVENU NET APRES ABBATEMENT // 
                                             
 let revenuabbtotal = 0;                                         
@@ -108,10 +109,10 @@ function calculateTaxParts() {
       defaultParts = 1 + 0.25 * Math.min(2, altChildrenCount);
   } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount > 0 && particularSituation === 'Nop') {
     defaultParts = 2;
-  } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount > 0 && particularSituation === 'invalid') {
+  } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount > 0 && (particularSituation === 'invalid' || particularSituation === 'self')) {
     defaultParts = 2.5;
   } else if (maritalStatus === 'widowed' && childrenCount+altChildrenCount === 0 && (particularSituation === 'invalid' || particularSituation === 'self')) {
-      defaultParts = 2.5;
+      defaultParts = 1.5;
   } else {
     defaultParts = 1;
   }
@@ -173,7 +174,7 @@ decote = forfaitcouple - (impotbrut * decotpourcent)
 
 decote = Math.round(decote);
 
-document.getElementById('décôte').innerText = `décôte ${decote} €`;
+document.getElementById('décôte').innerText = `Décôte ${decote} €`;
 
 }
 
@@ -315,10 +316,18 @@ document.getElementById('resulti').innerText = `Réduction max : ${y}`;
     
     impotnet = Math.round(impotnet);
 
+    
+
     document.getElementById('resultat_impots').innerText = `Impôt =  ${impotnet} €`;
 
+    
+  return impotnet;
+  
+  }
+
+
                                              // FIN //
-  } 
+
 
 
 function updateParticularSituationOptions() {
@@ -339,13 +348,21 @@ function updateParticularSituationOptions() {
     newOption.text = option.text;
 
     if (maritalStatus === "married" && (option.value === "isoled" || option.value === "self")) {
-      return; 
-      
-      // Ignore les options "Parent isolé(e)" et "Élevé(e) seul un enfant pendant 5 ans" si le statut matrimonial est "married"
-    
+      return;
+    }
+    if (maritalStatus === "widowed" && (option.value === "isoled" || option.value === "self")) {
+      return;
     }
 
     particularSituation.add(newOption);
   });
 }
 
+
+document.getElementById('calculer_impots').addEventListener('click', function(event) {
+  event.preventDefault(); // Empêche le comportement par défaut du bouton
+  let impotnet = calculateImpots(); // Appelle la fonction calculateImpots
+  // Rediriger vers la nouvelle page avec le résultat de l'impôt
+  let resultatUrl = "resultat" + impotnet;
+  window.location.href = resultatUrl;
+});
