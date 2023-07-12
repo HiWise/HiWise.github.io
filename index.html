@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,10 @@
 
   <body>
       <header>
-          <h2 class="logo">CareInvest</h2> 
+        <div>
+          <img src="logo.png" width="150px">
+        </div>
+          
           <nav class="navigation">
               <a href="#">Home</a>
               <a href="#">About</a>
@@ -65,24 +69,70 @@
                     <span class="icon"> 
                         <ion-icon name="accessibility-outline"></ion-icon>
                     </span>
-                    <input type="number" id="childrenCount" min="0" value="0" required> 
+                    <input type="number" id="childrenCount" min="0" required> 
                     <label>Enfant(s) à charge</label>
                 </div>
                 <div class="input-box">
                   <span class="icon"> 
                       <ion-icon name="accessibility-outline"></ion-icon>
                   </span>
-                  <input type="number" id="altChildrenCount" min="0" value="0" required> 
+                  <input type="number" id="altChildrenCount" min="0" required> 
                   <label>Enfant(s) à charge alterné</label>
                 </div> 
-                <p id="décôte"></p>
                 <p id="result"></p>
                 <p id="resulti"></p>
+                <p id="décôte"></p>
                 <p id="resulta"></p>
                 <p id="resultat_impots"></p>
                 <button type="submit" id="calculer_impots" class="btn">Calculer impôt</button>
             </form>
         </div>
+    </div>
+    <div class="wrapper2">
+      <div class="form-box investissement">
+          <h2>Caractéristiques de l'Investissement</h2> 
+          <form action="#">
+              <div class="input-box">
+                  <span class="icon">
+                      <ion-icon name="people-outline"></ion-icon>
+                  </span>
+                  <select name="regime_fiscal" id="regime_fiscal" >
+                    <option value="foncier">Foncier (IR)</option>
+                    <option value="lmnp">LMNP (location meublé non proffessionnel)</option>
+                    <option value="IS">Impôt sur les sociétés (IS)</option>
+                  </select>
+                  <label>Régime d'imposition</label>
+                </div>
+                  <div class="input-box">
+                  <span class="icon"> 
+                          <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="revenu-net-annuel" required > 
+                  <label>Loyers</label>
+              </div>
+              <div class="input-box conjoint-revenu">
+                  <span class="icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="Charges" required>
+                  <label>Charges de copropriétés</label>
+                </div>                  
+              <div class="input-box">
+                  <span class="icon"> 
+                      <ion-icon name="accessibility-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="childrenCount" required> 
+                  <label>Taxe foncière</label>
+              </div>
+              <div class="input-box">
+                <span class="icon"> 
+                    <ion-icon name="accessibility-outline"></ion-icon>
+                </span>
+                <input type="number" id="altChildrenCount" required> 
+                <label>Assurances PNO</label>
+          </form>
+      </div>
+      
     </div>
     <script src="script.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
