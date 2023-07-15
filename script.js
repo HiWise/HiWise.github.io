@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
   calculateTaxParts();
   updateParticularSituationOptions();
   calculateredmax();
+  calculatemensualité();
+  calculateloyer();
+   
 
   // Ajoutez les gestionnaires d'événements ici
   document.getElementById('marital_status').addEventListener('change', calculateTaxParts);
@@ -19,6 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('altChildrenCount').addEventListener('change', calculateredmax);
   document.getElementById('particular_situation').addEventListener('change', calculateredmax);
   document.getElementById('revenu-net-annuel').addEventListener('change', calculateDecote);
+  document.getElementById('durée').addEventListener('change', calculatemensualité);
+  document.getElementById('credit').addEventListener('change', calculatemensualité);
+  document.getElementById('taux_assurance').addEventListener('change', calculatemensualité);
+  document.getElementById('taux').addEventListener('change', calculatemensualité);
+  document.getElementById('loyer').addEventListener('change', calculateloyer);
+  document.getElementById('charges').addEventListener('change', calculateloyer);
+  document.getElementById('tf').addEventListener('change', calculateloyer);
+  document.getElementById('pno').addEventListener('change', calculateloyer);
 });
 
 
@@ -317,7 +328,6 @@ document.getElementById('resulti').innerText = `Réduction max : ${y}`;
     impotnet = Math.round(impotnet);
 
     
-
     document.getElementById('resultat_impots').innerText = `Impôt =  ${impotnet} €`;
 
     
@@ -363,6 +373,39 @@ document.getElementById('calculer_impots').addEventListener('click', function(ev
   event.preventDefault(); // Empêche le comportement par défaut du bouton
   let impotnet = calculateImpots(); // Appelle la fonction calculateImpots
   // Rediriger vers la nouvelle page avec le résultat de l'impôt
-  let resultatUrl = "resultat" + impotnet;
+  let resultatUrl = "resultat.html?impotnet=" + impotnet;
   window.location.href = resultatUrl;
 });
+
+function calculatemensualité() {
+  const n = (document.getElementById('durée').value)*12;
+  const M = parseInt(document.getElementById('credit').value) || 0;
+  const t = (parseFloat(document.getElementById('taux').value) || 0)/100/12;
+  const a = (parseFloat(document.getElementById('taux_assurance').value) || 0)/100;
+
+  assurance = a * M / 12 // assurance par mois //
+  mensualité = Math.round ((M * t/(1-Math.pow(1+t, -n)) + assurance)*100)/100
+  
+  
+  document.getElementById('mensualité').innerText = `mensulaité =  ${mensualité} €`;
+  
+}
+
+function calculateloyer() {
+  const loyer = (document.getElementById('loyer').value);
+  const charge = parseInt(document.getElementById('charges').value) || 0;
+  const tf = parseInt(document.getElementById('tf').value)/12 || 0;
+  const pno = parseInt(document.getElementById('pno').value)/12 || 0;
+
+  loyernet=Math.round(loyer-charge-tf-pno)
+  
+  document.getElementById('loyernet').innerText = `Loyer net =  ${loyernet} €`;
+  
+}
+
+const inputField = document.getElementById($parameters.revenu-net-annuel);
+inputField.onkeydown = function(e){    
+     if(e.target.value.length === 0 && e.key === '.'){
+            e.preventDefault();    
+     }
+}

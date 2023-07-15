@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Résultat de l'impôt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>
+    <div>
+        <p id="resultat_impots"></p>
+    </div>
+    
+  </h1>
+  
+  
+  <!-- Vos autres éléments HTML ici -->
+
+  <script>
+    // Récupérer le paramètre "impotnet" de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const impotnet = urlParams.get('impotnet');
+
+    // Afficher le résultat de l'impôt dans l'élément avec l'ID "resultat_impots"
+    const resultatImpotsElement = document.getElementById('resultat_impots');
+    resultatImpotsElement.textContent = `Votre impôt est de ${impotnet} €`;
+  </script>
+</body>
+</html>

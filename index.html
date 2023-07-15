@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website With Login & Registration | Codehal</title>
+    <title>CareInvest</title>
     <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
       <header>
         <div>
-          <img src="logo.png" width="150px">
+          <img src="logo4.bmp" width="150px">
         </div>
           
           <nav class="navigation">
@@ -55,14 +55,14 @@
                     <span class="icon"> 
                             <ion-icon name="cash-outline"></ion-icon>
                     </span>
-                    <input type="number" id="revenu-net-annuel" required > 
+                    <input type="number" id="revenu-net-annuel" min="0" pattern="[0-9]{10}" required > 
                     <label>Salaire net annuel</label>
                 </div>
                 <div class="input-box conjoint-revenu" style="display:none;">
                     <span class="icon">
                       <ion-icon name="cash-outline"></ion-icon>
                     </span>
-                    <input type="number" id="revenu-conjoint" required>
+                    <input type="number" id="revenu-conjoint" min="0" required>
                     <label>Revenu net annuel du conjoint</label>
                   </div>                  
                 <div class="input-box">
@@ -107,33 +107,68 @@
                   <span class="icon"> 
                           <ion-icon name="cash-outline"></ion-icon>
                   </span>
-                  <input type="number" id="revenu-net-annuel" required > 
-                  <label>Loyers</label>
+                  <input type="number" id="loyer" min="0" required > 
+                  <label>Loyers brut</label>
               </div>
               <div class="input-box conjoint-revenu">
                   <span class="icon">
                     <ion-icon name="cash-outline"></ion-icon>
                   </span>
-                  <input type="number" id="Charges" required>
-                  <label>Charges de copropriétés</label>
+                  <input type="number" id="charges" min="0" required>
+                  <label>Charges de copropriétés </label>
                 </div>                  
               <div class="input-box">
                   <span class="icon"> 
                       <ion-icon name="accessibility-outline"></ion-icon>
                   </span>
-                  <input type="number" id="childrenCount" required> 
-                  <label>Taxe foncière</label>
+                  <input type="number" id="tf" min="0" required> 
+                  <label>Taxe foncière (annuel)</label>
               </div>
               <div class="input-box">
                 <span class="icon"> 
                     <ion-icon name="accessibility-outline"></ion-icon>
                 </span>
-                <input type="number" id="altChildrenCount" required> 
+                <input type="number" id="pno" min="0" required> 
                 <label>Assurances PNO</label>
           </form>
       </div>
-      
+      <p id="loyernet"></p>
     </div>
+    
+    </div>
+    <div class="wrapper3">
+      <div class="form-box financement">
+          <h2>Caractéristiques du financement</h2> 
+          <div class="input-box">
+            <span class="icon"> 
+                <ion-icon name="accessibility-outline"></ion-icon>
+            </span>
+            <input type="number" id="durée" min="0" required> 
+            <label>Durée du crédit</label>
+          </div>
+                <div class="input-box">
+                  <span class="icon"> 
+                          <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="credit" min="0" required > 
+                  <label>Montant du crédit</label>
+              </div>
+              <div class="input-box conjoint-revenu">
+                  <span class="icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="taux" step="0.01" min="0" required>
+                  <label>Taux annuel</label>
+                </div>                  
+              <div class="input-box">
+                  <span class="icon"> 
+                      <ion-icon name="accessibility-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="taux_assurance" min="0" required> 
+                  <label>Taux annuel assurance</label>
+              </div>
+              <p id="mensualité"></p>
+
     <script src="script.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
