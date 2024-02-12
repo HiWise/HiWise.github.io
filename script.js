@@ -278,10 +278,10 @@ document.getElementById('resulti').innerText = `Réduction max : ${y}`;
     let RFR = revenuabbtotal/totalParts
                                             // METTRE A JOUR CHAQUE ANNEE //
 
-                                           const R1 = 10777; const T1 = 0.11
-                                           const R2 = 27478; const T2 = 0.30
-                                           const R3 = 78571; const T3 = 0.41
-                                           const R4 = 168994; const T4 = 0.45
+                                           const R1 = 11294; const T1 = 0.11
+                                           const R2 = 28797; const T2 = 0.30
+                                           const R3 = 82341; const T3 = 0.41
+                                           const R4 = 177106; const T4 = 0.45
 
                                             // METTRE A JOUR CHAQUE ANNEE //
 
