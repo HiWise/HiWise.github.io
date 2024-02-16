@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareInvest</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+      <header>
+        <div>
+          <img src="logo4.bmp" width="150px">
+        </div>
+          
+          <nav class="navigation">
+              <a href="#">Home</a>
+              <a href="#">About</a>
+              <a href="#">Services</a>
+              <a href="#">Contact</a>
+              <button class="btnLogin-popup">Login</button>
+          </nav>
+    </header>
+    <div class="wrapper">
+        <div class="form-box profil">
+            <h2>Profil</h2> 
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                    <select name="marital_status" id="marital_status" >
+                      <option value="single">Célibataire</option>
+                      <option value="married">Marié(e) / Pacsé(e)</option>
+                      <option value="divorced">Divorcé(e) / Séparé(e)</option>
+                      <option value="widowed">Veuf(ve)</option>
+                    </select>
+                    <label>Etat Civil</label>
+                  </div>
+                  <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                      <select name="particular_situation" id="particular_situation">
+                        <option value="Nop">Pas de situation particulière</option>
+                        <option value="isoled">Parent isolé(e)</option>
+                        <option value="self">Elevé(e) seul un enfant pendant 5 ans</option>
+                        <option value="invalid">Invalide / Ancien combattant(e)</option>
+                    </select>
+                    <label> Situation particulière </label>
+                  </div>
+                    <div class="input-box">
+                    <span class="icon"> 
+                            <ion-icon name="cash-outline"></ion-icon>
+                    </span>
+                    <input type="number" id="revenu-net-annuel" min="0" pattern="[0-9]{10}" required > 
+                    <label>Salaire net annuel</label>
+                </div>
+                <div class="input-box conjoint-revenu" style="display:none;">
+                    <span class="icon">
+                      <ion-icon name="cash-outline"></ion-icon>
+                    </span>
+                    <input type="number" id="revenu-conjoint" min="0" required>
+                    <label>Revenu net annuel du conjoint</label>
+                  </div>                  
+                <div class="input-box">
+                    <span class="icon"> 
+                        <ion-icon name="accessibility-outline"></ion-icon>
+                    </span>
+                    <input type="number" id="childrenCount" min="0" required> 
+                    <label>Enfant(s) à charge</label>
+                </div>
+                <div class="input-box">
+                  <span class="icon"> 
+                      <ion-icon name="accessibility-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="altChildrenCount" min="0" required> 
+                  <label>Enfant(s) à charge alterné</label>
+                </div> 
+                <p id="result"></p>
+                <p id="resulti"></p>
+                <p id="décôte"></p>
+                <p id="resulta"></p>
+                <p id="resultat_impots"></p>
+                <button type="submit" id="calculer_impots" class="btn">Calculer impôt</button>
+            </form>
+        </div>
+    </div>
+    <div class="wrapper2">
+      <div class="form-box investissement">
+          <h2>Caractéristiques de l'Investissement</h2> 
+          <form action="#">
+              <div class="input-box">
+                  <span class="icon">
+                      <ion-icon name="people-outline"></ion-icon>
+                  </span>
+                  <select name="regime_fiscal" id="regime_fiscal" >
+                    <option value="foncier">Foncier (IR)</option>
+                    <option value="lmnp">LMNP (location meublé non proffessionnel)</option>
+                    <option value="IS">Impôt sur les sociétés (IS)</option>
+                  </select>
+                  <label>Régime d'imposition</label>
+                </div>
+                  <div class="input-box">
+                  <span class="icon"> 
+                          <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="loyer" min="0" required > 
+                  <label>Loyers brut</label>
+              </div>
+              <div class="input-box conjoint-revenu">
+                  <span class="icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="charges" min="0" required>
+                  <label>Charges de copropriétés </label>
+                </div>                  
+              <div class="input-box">
+                  <span class="icon"> 
+                      <ion-icon name="accessibility-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="tf" min="0" required> 
+                  <label>Taxe foncière (annuel)</label>
+              </div>
+              <div class="input-box">
+                <span class="icon"> 
+                    <ion-icon name="accessibility-outline"></ion-icon>
+                </span>
+                <input type="number" id="pno" min="0" required> 
+                <label>Assurances PNO</label>
+          </form>
+      </div>
+      <p id="loyernet"></p>
+    </div>
+    
+    </div>
+    <div class="wrapper3">
+      <div class="form-box financement">
+          <h2>Caractéristiques du financement</h2> 
+          <div class="input-box">
+            <span class="icon"> 
+                <ion-icon name="accessibility-outline"></ion-icon>
+            </span>
+            <input type="number" id="durée" min="0" required> 
+            <label>Durée du crédit</label>
+          </div>
+                <div class="input-box">
+                  <span class="icon"> 
+                          <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="credit" min="0" required > 
+                  <label>Montant du crédit</label>
+              </div>
+              <div class="input-box conjoint-revenu">
+                  <span class="icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="taux" step="0.01" min="0" required>
+                  <label>Taux annuel</label>
+                </div>                  
+              <div class="input-box">
+                  <span class="icon"> 
+                      <ion-icon name="accessibility-outline"></ion-icon>
+                  </span>
+                  <input type="number" id="taux_assurance" min="0" required> 
+                  <label>Taux annuel assurance</label>
+              </div>
+              <p id="mensualité"></p>
+
+    <script src="script.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>
